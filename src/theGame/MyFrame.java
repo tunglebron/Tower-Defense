@@ -18,8 +18,6 @@ import javax.swing.JOptionPane;
 import javax.swing.*;
 
 public class MyFrame extends JFrame{
-	public static JLabel headerLabel;
-	public static JLabel statusLabel;
 	private static MyPanel panelBackground;
 	private static MyGameStage panelGameStage;
 	
@@ -28,25 +26,16 @@ public class MyFrame extends JFrame{
 	}
 	
 	private void initUI() {
-
         setTitle("Tower Defense");
         setSize(1280,720);
         setResizable(false);
-        
-        headerLabel = new JLabel("",JLabel.CENTER );
-        statusLabel = new JLabel("",JLabel.CENTER);
-        statusLabel.setSize(350,100);
-        
+       
         addWindowListener(new WindowAdapter() {
         	public void windowClosing(WindowEvent windowEvent) {
         		System.exit(0);
         	}
         });
-        
-        add(headerLabel);
-        add(statusLabel);
-		setVisible(true);
-
+        //pack();
     }
 	
 	public void showBackground() {        
@@ -61,7 +50,7 @@ public class MyFrame extends JFrame{
 	
 	private void showGameStartButton() {
 		JButton startButton = new JButton(new ImageIcon("src/icon/Start Defense Button.png"));
-		startButton.setBounds(535, 500,210, 48);
+		startButton.setBounds(553, 460,180, 55);
 		startButton.setBorderPainted(true);
 		startButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -101,6 +90,9 @@ public class MyFrame extends JFrame{
 				if (output == JOptionPane.YES_OPTION) {
 					// dong lenh khoi tao man game moi
 					panelBackground.setVisible(false);
+					if (panelGameStage != null) {
+						panelGameStage.setVisible(false);
+					}
 			        panelGameStage = new MyGameStage();
 			        add(panelGameStage);
 			        panelGameStage.setVisible(true);

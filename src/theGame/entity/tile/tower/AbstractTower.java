@@ -11,6 +11,7 @@ import java.awt.Rectangle;
 import java.util.*;
 
 public abstract class AbstractTower implements GameTile {
+	protected int time = 0; // new 
 	protected int x, y;
 	protected int bulletSpeed; // toc do dan
 	protected int shootingDistance; // tam ban
@@ -31,12 +32,21 @@ public abstract class AbstractTower implements GameTile {
 		return this.damage;
 	}
 	
+	public int getShootingDistance() {
+		return this.shootingDistance;
+	}
+	
+	public int getTime() {
+		return this.time;
+	}
+	
 	public void update() {
+		if (time < 70) time = time + 1;
 		for (int i = 0; i < this.towerBullet.size(); i++) {
 			this.towerBullet.get(i).move();
-			/*
+			
 			this.towerBullet.get(i).checkVisible();
-			*/
+			
 			if (distance( this.towerBullet.get(i).getX() , this.towerBullet.get(i).getY() ) > this.shootingDistance ) {
 				this.towerBullet.get(i).setVisible(false);
 			}
@@ -52,10 +62,8 @@ public abstract class AbstractTower implements GameTile {
 	}
 	
 	public void fire(int target_x, int target_y, int targetSpeed) {
-		if (this.towerBullet.size() == 0) {
-			towerBullet.add(new Bullet(this.x + 25, this.y - 10, this.bulletSpeed, this.damage, target_x, target_y));
-			//towerBullet.add(new Bullet(this.x + 25, this.y - 10, this.bulletSpeed, this.damage, target_x + targetSpeed, target_y));
-		}	
+		this.time = 0;
+		towerBullet.add(new Bullet(this.x + 25, this.y - 5, this.bulletSpeed, this.damage, target_x + 10, target_y + 10));
 	}
 	
 	Image myImage;
@@ -68,8 +76,8 @@ public abstract class AbstractTower implements GameTile {
 	}
 	
 	// tam ban 
-	public Rectangle getRange() {
-		return new Rectangle(this.x - this.shootingDistance/2,this.y - this.shootingDistance/2,this.shootingDistance,this.shootingDistance);
+	public double distane(int target_x, int target_y) {
+		return Math.sqrt( Math.pow(this.x-target_x, 2) + Math.pow(this.y-target_y, 2) );
 	}
 	
 }

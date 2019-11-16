@@ -14,7 +14,7 @@ public class BossEnemy extends Enemy{
 		damage = 100;
 		blood = 200;
 		speed = 1;
-		defense = 200;
+		defense = 20;
 		award = 150;
 	}
 	
@@ -64,7 +64,7 @@ public class BossEnemy extends Enemy{
         	ii = new ImageIcon("src/icon/Enemy/BossEnemy/BossEnemy-walkUp.gif");
         	return ii.getImage();
         }
-        if (this.posX >= 955) {
+        if (this.posX >= 952) {
         	ii = new ImageIcon("src/icon/Enemy/BossEnemy/BossEnemy_attack.gif");
         	return ii.getImage();
         }

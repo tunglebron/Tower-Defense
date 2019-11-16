@@ -16,7 +16,7 @@ public class NormalTower extends AbstractTower implements GameTile {
 		this.x = x;
 		this.y = y;
 		this.bulletSpeed = 2; // tuy chinh
-		this.damage = 20; // tuy chinh
+		this.damage = 25; // tuy chinh
 		this.shootingDistance = 200; // tuy chinh
 		graphic();
 	}
@@ -30,7 +30,7 @@ public class NormalTower extends AbstractTower implements GameTile {
 	}
 		
 	public void graphic() {
-        ImageIcon ii = new ImageIcon("src/icon/Tower/kale1.png");
+        ImageIcon ii = new ImageIcon("src/icon/Tower/NormalTower.png");
         myImage = ii.getImage();
 	}
 	

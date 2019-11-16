@@ -14,7 +14,7 @@ public class NormalEnemy extends Enemy{
 		damage = 50;
 		blood = 50;
 		speed = 2;
-		defense = 50;
+		defense = 5;
 		award = 50;
 	}
 	

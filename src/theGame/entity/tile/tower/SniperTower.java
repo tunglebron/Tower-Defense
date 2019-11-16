@@ -27,7 +27,7 @@ public class SniperTower extends AbstractTower implements GameTile {
 	}
 	
 	public void graphic() {
-        ImageIcon ii = new ImageIcon("");
+        ImageIcon ii = new ImageIcon("src/icon/Tower/SniperTower.png");
         myImage = ii.getImage(); 
 	}
 	

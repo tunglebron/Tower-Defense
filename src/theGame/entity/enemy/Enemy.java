@@ -66,7 +66,9 @@ public abstract class Enemy implements GameEntity{
 	}
 	
 	public void setBlood(int getShot) {
-		this.blood -= getShot;
+		int temp = this.defense - getShot;
+		if (temp > 0) temp = 0;
+		this.blood = this.blood + temp;
 	}
 	
 	abstract public Image loadImage();
@@ -76,7 +78,7 @@ public abstract class Enemy implements GameEntity{
 	}
 	
     public Rectangle getBounds() {
-        return new Rectangle(posX, posY, 50, 50);
+        return new Rectangle(posX, posY, 40, 40);
     }
 
 }

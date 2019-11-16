@@ -13,7 +13,7 @@ public class MachineGunTower extends AbstractTower implements GameTile {
 		this.x = x;
 		this.y = y;
 		this.bulletSpeed = 3; // tuy chinh
-		this.damage = 20; // tuy chinh
+		this.damage = 25; // tuy chinh
 		this.shootingDistance = 100; // tuy chinh
 		graphic();
 	}
