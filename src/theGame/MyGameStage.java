@@ -22,6 +22,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.Timer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -50,6 +51,10 @@ public class MyGameStage extends JPanel implements ActionListener {
 	private JButton Button1 = new JButton();
 	private JButton Button2 = new JButton();
 	private JButton Button3 = new JButton();
+	private JTextField textLevel = new JTextField();
+	private JTextField textLive = new JTextField();
+	private JTextField textMoney = new JTextField();
+	
 	private boolean addTower1 = false; // add Normal Tower
 	private boolean addTower2 = false; // add MachineGun Tower
 	private boolean addTower3 = false; // add Sniper Tower
@@ -95,9 +100,40 @@ public class MyGameStage extends JPanel implements ActionListener {
     	playButton.setBorderPainted(true);
     	sidePanel.add(playButton);
     	
+    	textSidePanel();
+    	
     	TowerButton();
     	
     	setLayout(null);
+    }
+    
+    private void textSidePanel()
+    {
+    	textLevel.setEditable(false);
+        textLevel.setBackground(new java.awt.Color(153, 255, 255));
+        textLevel.setText("LEVEL : "+level+"");
+        sidePanel.add(textLevel);
+        textLevel.setBounds(1100, 900, 200, 100);
+        
+    	
+    	textLive.setEditable(false);
+    	textLive.setBackground(new java.awt.Color(153, 255, 255));
+    	textLive.setText("LIVES : "+live+"");
+        sidePanel.add(textLive);
+        textLive.setBounds(1100, 900, 200, 100);
+        
+        textMoney.setEditable(false);
+        textMoney.setBackground(new java.awt.Color(153, 255, 255));
+        textMoney.setText("MONEYS : "+money+"");
+        sidePanel.add(textMoney);
+        textMoney.setBounds(1100, 900, 200, 100);
+    }
+    
+    private void updateTextSidePanel()
+    {
+    	textLevel.setText("LEVEL : "+ level +"");
+    	textLive.setText("LIVES : "+live+"");
+    	textMoney.setText("MONEYS : "+money+"");
     }
     
     private void mouseAdapter() {
@@ -143,6 +179,7 @@ public class MyGameStage extends JPanel implements ActionListener {
     					if (add) {
     						towerObjects.add(new NormalTower(Xpos,Ypos));
     						money -= 20;
+    						updateTextSidePanel();
     						repaint();
     					}
     					addTower1 = false;
@@ -190,6 +227,7 @@ public class MyGameStage extends JPanel implements ActionListener {
     					if (add) {
     						towerObjects.add(new MachineGunTower(Xpos,Ypos));
     						money -= 20;
+    						updateTextSidePanel();
     						repaint();
     					}
     					addTower2 = false;
@@ -237,6 +275,7 @@ public class MyGameStage extends JPanel implements ActionListener {
     					if (add) {
     						towerObjects.add(new SniperTower(Xpos,Ypos));
     						money -= 40;
+    						updateTextSidePanel();
     						repaint();
     					}
     					addTower3 = false;
@@ -442,6 +481,7 @@ public class MyGameStage extends JPanel implements ActionListener {
     		   	
     		checkCollisions();
     	}
+    	updateTextSidePanel();
     	
     	repaint();
     }

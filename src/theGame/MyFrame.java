@@ -8,13 +8,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.net.URL;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
+import javax.sound.sampled.*;
 import javax.swing.*;
 
 public class MyFrame extends JFrame{
@@ -68,6 +65,57 @@ public class MyFrame extends JFrame{
 		setVisible(true);
 	}
 	
+	public void showSound()
+	{
+		try {
+			// Open an audio input stream.
+			URL url = this.getClass().getClassLoader().getResource("sound/sound.wav");
+			AudioInputStream audioIn = AudioSystem.getAudioInputStream(url);
+
+			// Get a sound clip resource.
+			Clip clip = AudioSystem.getClip();
+			clip.addLineListener(new LineListener()
+			{
+				@Override
+				public void update(LineEvent event)
+				{
+					if (event.getType() == LineEvent.Type.STOP)
+						clip.close();
+				}
+			});
+			// Open audio clip and load samples from the audio input stream.
+			clip.open(audioIn);
+
+			clip.start();
+
+			clip.loop(Clip.LOOP_CONTINUOUSLY); // chay vo tan
+
+		} catch (UnsupportedAudioFileException e) {
+			System.err.println(e.getMessage());
+		} catch (IOException e) {
+			System.err.println(e.getMessage());
+		} catch (LineUnavailableException e) {
+			System.err.println(e.getMessage());
+		} 
+	}
+	
+	public void showSound2(boolean play) throws Exception {
+		URL url = this.getClass().getClassLoader().getResource("sound/sound.wav");
+		Clip clip = AudioSystem.getClip();
+		// getAudioInputStream() also accepts a File or InputStream
+		AudioInputStream ais = AudioSystem.getAudioInputStream( url );
+		clip.open(ais);
+		if (play) clip.loop(Clip.LOOP_CONTINUOUSLY);
+		if (!play) clip.close();
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				// A GUI element to prevent the Clip's daemon Thread 
+				// from terminating at the end of the main()
+				//JOptionPane.showMessageDialog(null, "Close to exit!");
+			}
+		});
+	}
+	
 	public void menu() {
 		MyFrame f1 = this;
 		final JMenuBar menuBar = new JMenuBar();
@@ -82,6 +130,8 @@ public class MyFrame extends JFrame{
 		highScore.setActionCommand("High Score");
 		JMenuItem newGame = new JMenuItem("New Game");
 		newGame.setActionCommand("New Game");
+		JMenuItem sound = new JMenuItem("Sound");
+		sound.setActionCommand("Sound");
 		
 		
 		newGame.addActionListener(new ActionListener() {
@@ -116,13 +166,36 @@ public class MyFrame extends JFrame{
 				JOptionPane.showMessageDialog(f1, "HighScore");
 			}
 		});
+		
+		sound.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent event) {
+				int output = JOptionPane.showConfirmDialog(f1,"Do you want to play background music?","Play Music",JOptionPane.YES_NO_OPTION);
+				if (output == JOptionPane.YES_OPTION) {
+					try {
+						showSound2(true);
+					} catch (Exception e) {
+						System.out.println("Cannot Play Music");
+					}
+				}
+				if (output == JOptionPane.NO_OPTION) {
+					try {
+						showSound2(false);
+					} catch (Exception e) {
+						System.out.println("Cannot Stop Music");
+					}
+				}
+			}
+		});
 			
 	    //add item to menu
 		fileMenu.add(newGame);
 		fileMenu.addSeparator();
+		fileMenu.add(sound);
+		fileMenu.addSeparator();
 		fileMenu.add(highScore);
 	    fileMenu.addSeparator();
 	    fileMenu.add(exitMenuItem);
+	    fileMenu.addSeparator();
 	    
 	    // add menu to menu bar
 	    menuBar.add(fileMenu);
