@@ -6,16 +6,16 @@ import javax.swing.ImageIcon;
 
 public class NormalEnemy extends Enemy{
 	
-	public NormalEnemy() {
-		this.posX = -50;
+	public NormalEnemy(int x) {
+		posX = x;
 		this.posY = 40;
 		this.visible = true;
 		
 		damage = 50;
-		blood = 50;
+		blood = 100;
 		speed = 2;
 		defense = 5;
-		award = 50;
+		award = 15;
 	}
 	
 	@Override

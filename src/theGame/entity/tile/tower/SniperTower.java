@@ -13,8 +13,8 @@ public class SniperTower extends AbstractTower implements GameTile {
 		this.x = x;
 		this.y = y;
 		this.bulletSpeed = 2; // tuy chinh
-		this.damage = 40; // tuy chinh
-		this.shootingDistance = 400; // tuy chinh
+		this.damage = 35; // tuy chinh
+		this.shootingDistance = 300; // tuy chinh
 		graphic();
 	}
 	

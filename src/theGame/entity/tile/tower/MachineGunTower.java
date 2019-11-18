@@ -12,7 +12,7 @@ public class MachineGunTower extends AbstractTower implements GameTile {
 	public MachineGunTower(int x, int y) {
 		this.x = x;
 		this.y = y;
-		this.bulletSpeed = 3; // tuy chinh
+		this.bulletSpeed = 4; // tuy chinh
 		this.damage = 25; // tuy chinh
 		this.shootingDistance = 100; // tuy chinh
 		graphic();
@@ -28,7 +28,7 @@ public class MachineGunTower extends AbstractTower implements GameTile {
 	
 	public void graphic() {
 		// bo sung anh
-        ImageIcon ii = new ImageIcon("src/icon/Tower/kuled.png");
+        ImageIcon ii = new ImageIcon("src/icon/Tower/MachineGunTower.png");
         myImage = ii.getImage(); 
 	}
 	

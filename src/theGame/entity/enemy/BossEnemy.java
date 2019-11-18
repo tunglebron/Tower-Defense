@@ -6,16 +6,16 @@ import javax.swing.ImageIcon;
 
 public class BossEnemy extends Enemy{
 	
-	public BossEnemy() {
-		posX = -200;
+	public BossEnemy(int x) {
+		posX = x;
 		this.posY = 35;
 		this.visible = true;
 		
 		damage = 100;
-		blood = 200;
+		blood = 300;
 		speed = 1;
 		defense = 20;
-		award = 150;
+		award = 40;
 	}
 	
 	public void move() {

@@ -6,16 +6,16 @@ import javax.swing.ImageIcon;
 
 public class TankerEnemy extends Enemy{
 	
-	public TankerEnemy() {
-		posX = -20;
+	public TankerEnemy(int x) {
+		posX = x;
 		this.posY = 50;
 		this.visible = true;
 		
-		damage = 50;
-		blood = 100;
+		damage = 75;
+		blood = 200;
 		speed = 1;
 		defense = 10;
-		award = 50;
+		award = 20;
 	}
 	
 	public void move() {

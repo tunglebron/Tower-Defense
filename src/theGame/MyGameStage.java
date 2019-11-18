@@ -1,24 +1,15 @@
 package theGame;
 
-import theGame.entity.AbstractEntity;
 import theGame.entity.tile.tower.*;
 import theGame.entity.enemy.*;
 import theGame.entity.bullet.Bullet;
 import theGame.entity.NonMoving.*;
-import theGame.MyFrame;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.awt.Rectangle;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -28,10 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseMotionAdapter;
-import javax.swing.border.EmptyBorder;
 
 import java.util.*;
 
@@ -76,7 +64,6 @@ public class MyGameStage extends JPanel implements ActionListener {
         addTower1 = false;
         addTower2 = false;
         addTower3 = false;
-        mouseAdapter();
         
         initBoard();
 
@@ -100,9 +87,9 @@ public class MyGameStage extends JPanel implements ActionListener {
     	playButton.setBorderPainted(true);
     	sidePanel.add(playButton);
     	
-    	textSidePanel();
-    	
     	TowerButton();
+    
+    	textSidePanel();
     	
     	setLayout(null);
     }
@@ -135,15 +122,7 @@ public class MyGameStage extends JPanel implements ActionListener {
     	textLive.setText("LIVES : "+live+"");
     	textMoney.setText("MONEYS : "+money+"");
     }
-    
-    private void mouseAdapter() {
-        addMouseListener(new MouseAdapter() {
-        	public void mousePressed(MouseEvent e) {
-        		System.out.println(e.getX() + "," + e.getY());
-        	}
-        });	
-    }
-    
+
     private void TowerButton() {
     	Button1.setIcon(new ImageIcon("src/icon/Tower/NormalTower.png"));
     	Button1.setText("Money:20 Damage:25 Speed:2");
@@ -193,8 +172,8 @@ public class MyGameStage extends JPanel implements ActionListener {
     		}
     	});
     	
-    	Button2.setIcon(new ImageIcon("src/icon/Tower/kuled.png"));
-    	Button2.setText("Money:20 Damage:25 Speed:3");
+    	Button2.setIcon(new ImageIcon("src/icon/Tower/MachineGunTower.png"));
+    	Button2.setText("Money:20 Damage:25 Speed:4");
     	Button2.setBorderPainted(false);
     	Button2.setBounds(1100, 900, 200, 100);
     	Button2.addMouseListener(new MouseAdapter() {
@@ -242,7 +221,7 @@ public class MyGameStage extends JPanel implements ActionListener {
     	});
     	
     	Button3.setIcon(new ImageIcon("src/icon/Tower/SniperTower.png"));
-    	Button3.setText("Money:40 Damage:40 Speed:2");
+    	Button3.setText("Money:50 Damage:35 Speed:2");
     	Button3.setBorderPainted(false);
     	Button3.setBounds(1100, 900, 200, 100);
     	Button3.addMouseListener(new MouseAdapter() {
@@ -274,7 +253,7 @@ public class MyGameStage extends JPanel implements ActionListener {
     					}
     					if (add) {
     						towerObjects.add(new SniperTower(Xpos,Ypos));
-    						money -= 40;
+    						money -= 50;
     						updateTextSidePanel();
     						repaint();
     					}
@@ -285,7 +264,7 @@ public class MyGameStage extends JPanel implements ActionListener {
     	});
     	Button3.addMouseMotionListener(new MouseMotionAdapter() {
     		public void mouseDragged(MouseEvent e) {
-    			if (money >= 40) addTower3 = true;
+    			if (money >= 50) addTower3 = true;
     		}
     	});
     	
@@ -321,6 +300,7 @@ public class MyGameStage extends JPanel implements ActionListener {
     	playButton.addActionListener(new ActionListener() {
     		public void actionPerformed(ActionEvent e) {
     			playButton.setVisible(false);
+    			level++;
     			initEnemy();	
     			timer.isRepeats();
     			ingame = true;
@@ -336,9 +316,10 @@ public class MyGameStage extends JPanel implements ActionListener {
     	myImage = new Image[5];
     	myImage[0] = loadImage("src/icon/sand2.jpg");
     	myImage[1] = loadImage("src/icon/grass1.png");
+    	//myImage[1] = loadImage("src/icon/grass_random_grid.png");
     	myImage[2] = loadImage("src/icon/Gate.png");
-    	myImage[3] = loadImage("src/icon/sand.jpg");
-    	myImage[4] = loadImage("src/icon/grass_TowerDefense.jpg");
+    	myImage[3] = loadImage("src/icon/Tower/broken_tower_background.png");
+    	myImage[4] = loadImage("src/icon/grass_rock.png");
     	for (int i = 0; i < 14; i++) {
     		for (int j = 0; j < 21; j++) {
     			if (MAP_SPRITES_1[i][j] == "2") {
@@ -350,13 +331,86 @@ public class MyGameStage extends JPanel implements ActionListener {
     
     private void initEnemy() {
     	if (level == 1) {
-    		gameEnemy.add(new BossEnemy());
+    		int position = -20;
+    		double random;
+    		for (int i = 0; i < 12; i++) {
+    			random = Math.random();
+    			if (random >= 0 && random < 0.3) {
+    				gameEnemy.add(new SmallerEnemy(position));
+    				position -= 40;
+    				continue;
+    			}
+    			if (random >= 0.3 && random < 0.6) {
+    				gameEnemy.add(new NormalEnemy(position));
+    				position -= 40;
+    				continue;
+    			}
+    			if (random >= 0.6 && random < 0.9) {
+    				gameEnemy.add(new TankerEnemy(position));
+    				position -= 40;
+    				continue;
+    			}
+    			if (random >= 0.9 && random <= 1) {
+    				gameEnemy.add(new BossEnemy(position));
+    				position -= 40;
+    				continue;
+    			}
+    		}		
     	}
     	if (level == 2) {
-    		gameEnemy.add(new BossEnemy());
-    		gameEnemy.add(new NormalEnemy());
+    		int position = -20;
+    		double random;
+    		for (int i = 0; i < 24; i++) {
+    			random = Math.random();
+    			if (random >= 0 && random < 0.25) {
+    				gameEnemy.add(new SmallerEnemy(position));
+    				position -= 40;
+    				continue;
+    			}
+    			if (random >= 0.25 && random < 0.5) {
+    				gameEnemy.add(new NormalEnemy(position));
+    				position -= 40;
+    				continue;
+    			}
+    			if (random >= 0.5 && random < 0.8) {
+    				gameEnemy.add(new TankerEnemy(position));
+    				position -= 40;
+    				continue;
+    			}
+    			if (random >= 0.8 && random <= 1) {
+    				gameEnemy.add(new BossEnemy(position));
+    				position -= 40;
+    				continue;
+    			}
+    		}
     	}
-    	
+    	if (level == 3) {
+    		int position = -20;
+    		double random;
+    		for (int i = 0; i < 36; i++) {
+    			random = Math.random();
+    			if (random >= 0 && random < 0.2) {
+    				gameEnemy.add(new SmallerEnemy(position));
+    				position -= 40;
+    				continue;
+    			}
+    			if (random >= 0.2 && random < 0.4) {
+    				gameEnemy.add(new NormalEnemy(position));
+    				position -= 40;
+    				continue;
+    			}
+    			if (random >= 0.4 && random < 0.6) {
+    				gameEnemy.add(new TankerEnemy(position));
+    				position -= 40;
+    				continue;
+    			}
+    			if (random >= 0.6 && random <= 1) {
+    				gameEnemy.add(new BossEnemy(position));
+    				position -= 40;
+    				continue;
+    			}
+    		}	
+    	}
     }
     
     private Image loadImage(String file) {
@@ -366,8 +420,8 @@ public class MyGameStage extends JPanel implements ActionListener {
     
     private static final String[][] MAP_SPRITES_1 = new String[][] {
     	{"1","1","1","1", "1","1","1","1", "1","1","1","1", "1","1","1","1", "1","1","1","1","1"},
-    	{"2","2","2","2", "1","1","1","1", "1","1","1","1", "1","1","1","1", "1","1","1","1","1"},
-    	{"1","1","1","2", "1","1","1","1", "1","1","1","1", "1","1","1","1", "1","1","1","1","1"},
+    	{"2","2","2","2", "1","1","1","1", "1","1","1","1", "1","1","1","1", "1","1","2","2","1"},
+    	{"1","1","1","2", "1","1","1","1", "1","1","1","1", "1","1","1","1", "1","1","2","2","1"},
     	{"1","1","1","2", "1","1","1","1", "1","1","1","1", "1","1","1","1", "1","1","1","1","1"},
     	{"1","1","1","2", "1","1","1","1", "2","2","2","2", "2","2","2","2", "1","1","1","1","1"},
     	{"1","1","1","2", "1","1","1","1", "2","1","1","1", "1","1","1","2", "1","1","1","1","1"},
@@ -416,10 +470,10 @@ public class MyGameStage extends JPanel implements ActionListener {
     	
     	drawMap(g); // draw map
     	if (win) {		
-    		if (ingame && this.level < 4) {
+    		if (ingame && this.level != 4) {
     			drawEnemy(g); // draw enemy
     		}
-    		if (this.level < 4) drawTower(g); // draw tower
+    		if (this.level != 4) drawTower(g); // draw tower
     		if (this.level == 4) {
                 String msg = "You win";
                 Font small = new Font("Helvetica", Font.BOLD, 30);
@@ -438,6 +492,11 @@ public class MyGameStage extends JPanel implements ActionListener {
             g.setFont(small);
             g.drawString(msg, 505, 360);
     	}
+    	g.drawImage(myImage[1], 18*50, 1*50, null); // draw grass
+    	g.drawImage(myImage[1], 19*50, 1*50, null); // draw grass
+    	g.drawImage(myImage[1], 18*50, 2*50, null); // draw grass
+    	g.drawImage(myImage[1], 19*50, 2*50, null); // draw grass
+    	g.drawImage(myImage[3], 18*50, 1*50, null); // draw broken castle
     	g.drawImage(myImage[2], 20*50, 8*50, null); // draw gate
     	Toolkit.getDefaultToolkit().sync();
     }
@@ -448,13 +507,11 @@ public class MyGameStage extends JPanel implements ActionListener {
     		deleteAllObjects();
     		timer.stop();
     	}
-    	if (this.level == 3) this.level++;
-    	if (live > 0 && gameEnemy.size() == 0 && this.level < 3 && this.level != 0) {
+    	if (live > 0 && gameEnemy.size() == 0 && this.level != 4 && this.level != 0) {
     		for (int i = 0; i < towerObjects.size(); i++) {
     			List<Bullet> bullet = towerObjects.get(i).towerBullet;
     			bullet.removeAll(bullet);
     		}
-    		this.level++;
     		ingame = false;
     		reInitPlayButton();
     	}
@@ -480,8 +537,9 @@ public class MyGameStage extends JPanel implements ActionListener {
     		updateTower();
     		   	
     		checkCollisions();
+    		
+    		updateTextSidePanel();
     	}
-    	updateTextSidePanel();
     	
     	repaint();
     }

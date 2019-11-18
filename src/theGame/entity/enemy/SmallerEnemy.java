@@ -6,16 +6,16 @@ import javax.swing.ImageIcon;
 
 public class SmallerEnemy extends Enemy{
 	
-	public SmallerEnemy() {
-		posX = -400;
+	public SmallerEnemy(int x) {
+		posX = x;
 		this.posY = 50;
 		this.visible = true;		
 		
 		damage = 50;
-		blood = 25;
+		blood = 75;
 		speed = 2;
 		defense = 5;
-		award = 50;
+		award = 10;
 	}
 	
 	public void move() {
