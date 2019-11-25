@@ -12,7 +12,7 @@ public class BossEnemy extends Enemy{
 		this.visible = true;
 		
 		damage = 100;
-		blood = 300;
+		blood = 400;
 		speed = 1;
 		defense = 20;
 		award = 40;

@@ -12,18 +12,18 @@ public class TankerEnemy extends Enemy{
 		this.visible = true;
 		
 		damage = 75;
-		blood = 200;
+		blood = 250;
 		speed = 1;
 		defense = 10;
 		award = 20;
 	}
 	
 	public void move() {
-		if (this.posY == 50 && this.posX != 160) {
+		if (this.posY == 50 && this.posX != 155) {
 			posX += speed;
 			return;
 		}
-		if (this.posX == 160 && this.posY != 600) {
+		if (this.posX == 155 && this.posY != 600) {
 			posY += speed;
 			return;
 		}
@@ -55,7 +55,17 @@ public class TankerEnemy extends Enemy{
 	
 	// hien thi do hoa
     public Image loadImage() {
-        ImageIcon ii = new ImageIcon("src/icon/Enemy/TankerEnemy/TankerEnemy_walk.gif");
+    	ImageIcon ii;
+    	if (this.posX == 155 || this.posX== 760) {
+        	ii = new ImageIcon("src/icon/Enemy/TankerEnemy/TankerEnemy_walk_down.gif");
+        	return ii.getImage();
+    	}
+    	if (this.posX == 410) {
+        	ii = new ImageIcon("src/icon/Enemy/TankerEnemy/TankerEnemy_walk_up.gif");
+        	return ii.getImage();	
+    	}
+    	
+    	ii = new ImageIcon("src/icon/Enemy/TankerEnemy/TankerEnemy_walk.gif");
         return ii.getImage();        
     }
     

@@ -12,7 +12,7 @@ public class SmallerEnemy extends Enemy{
 		this.visible = true;		
 		
 		damage = 50;
-		blood = 75;
+		blood = 100;
 		speed = 2;
 		defense = 5;
 		award = 10;

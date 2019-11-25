@@ -47,6 +47,8 @@ public class MyGameStage extends JPanel implements ActionListener {
 	private boolean addTower2 = false; // add MachineGun Tower
 	private boolean addTower3 = false; // add Sniper Tower
 	
+	private boolean updateText = false;
+	
 	private Image[] myImage;
 	public static List<Enemy> gameEnemy;
 	public final List<AbstractTower> towerObjects;
@@ -101,8 +103,7 @@ public class MyGameStage extends JPanel implements ActionListener {
         textLevel.setText("LEVEL : "+level+"");
         sidePanel.add(textLevel);
         textLevel.setBounds(1100, 900, 200, 100);
-        
-    	
+         	
     	textLive.setEditable(false);
     	textLive.setBackground(new java.awt.Color(153, 255, 255));
     	textLive.setText("LIVES : "+live+"");
@@ -111,16 +112,17 @@ public class MyGameStage extends JPanel implements ActionListener {
         
         textMoney.setEditable(false);
         textMoney.setBackground(new java.awt.Color(153, 255, 255));
-        textMoney.setText("MONEYS : "+money+"");
+        textMoney.setText("MONEYS : " + money + "");
         sidePanel.add(textMoney);
         textMoney.setBounds(1100, 900, 200, 100);
     }
     
     private void updateTextSidePanel()
     {
-    	textLevel.setText("LEVEL : "+ level +"");
-    	textLive.setText("LIVES : "+live+"");
-    	textMoney.setText("MONEYS : "+money+"");
+    	textLevel.setText("LEVEL : " + level + "");
+    	textLive.setText("LIVES : " + live + "");
+    	textMoney.setText("MONEYS : " + money + "");
+    	updateText = false;
     }
 
     private void TowerButton() {
@@ -158,6 +160,7 @@ public class MyGameStage extends JPanel implements ActionListener {
     					if (add) {
     						towerObjects.add(new NormalTower(Xpos,Ypos));
     						money -= 20;
+    						updateText = true;
     						updateTextSidePanel();
     						repaint();
     					}
@@ -206,6 +209,7 @@ public class MyGameStage extends JPanel implements ActionListener {
     					if (add) {
     						towerObjects.add(new MachineGunTower(Xpos,Ypos));
     						money -= 20;
+    						updateText = true;
     						updateTextSidePanel();
     						repaint();
     					}
@@ -254,6 +258,7 @@ public class MyGameStage extends JPanel implements ActionListener {
     					if (add) {
     						towerObjects.add(new SniperTower(Xpos,Ypos));
     						money -= 50;
+    						updateText = true;
     						updateTextSidePanel();
     						repaint();
     					}
@@ -333,26 +338,26 @@ public class MyGameStage extends JPanel implements ActionListener {
     	if (level == 1) {
     		int position = -20;
     		double random;
-    		for (int i = 0; i < 12; i++) {
+    		for (int i = 0; i < 15; i++) {
     			random = Math.random();
     			if (random >= 0 && random < 0.3) {
     				gameEnemy.add(new SmallerEnemy(position));
-    				position -= 40;
+    				position -= 80;
     				continue;
     			}
     			if (random >= 0.3 && random < 0.6) {
     				gameEnemy.add(new NormalEnemy(position));
-    				position -= 40;
+    				position -= 80;
     				continue;
     			}
     			if (random >= 0.6 && random < 0.9) {
     				gameEnemy.add(new TankerEnemy(position));
-    				position -= 40;
+    				position -= 80;
     				continue;
     			}
     			if (random >= 0.9 && random <= 1) {
     				gameEnemy.add(new BossEnemy(position));
-    				position -= 40;
+    				position -= 80;
     				continue;
     			}
     		}		
@@ -360,26 +365,26 @@ public class MyGameStage extends JPanel implements ActionListener {
     	if (level == 2) {
     		int position = -20;
     		double random;
-    		for (int i = 0; i < 24; i++) {
+    		for (int i = 0; i < 30; i++) {
     			random = Math.random();
     			if (random >= 0 && random < 0.25) {
     				gameEnemy.add(new SmallerEnemy(position));
-    				position -= 40;
+    				position -= 80;
     				continue;
     			}
     			if (random >= 0.25 && random < 0.5) {
     				gameEnemy.add(new NormalEnemy(position));
-    				position -= 40;
+    				position -= 80;
     				continue;
     			}
     			if (random >= 0.5 && random < 0.8) {
     				gameEnemy.add(new TankerEnemy(position));
-    				position -= 40;
+    				position -= 80;
     				continue;
     			}
     			if (random >= 0.8 && random <= 1) {
     				gameEnemy.add(new BossEnemy(position));
-    				position -= 40;
+    				position -= 80;
     				continue;
     			}
     		}
@@ -391,22 +396,22 @@ public class MyGameStage extends JPanel implements ActionListener {
     			random = Math.random();
     			if (random >= 0 && random < 0.2) {
     				gameEnemy.add(new SmallerEnemy(position));
-    				position -= 40;
+    				position -= 80;
     				continue;
     			}
     			if (random >= 0.2 && random < 0.4) {
     				gameEnemy.add(new NormalEnemy(position));
-    				position -= 40;
+    				position -= 80;
     				continue;
     			}
     			if (random >= 0.4 && random < 0.6) {
     				gameEnemy.add(new TankerEnemy(position));
-    				position -= 40;
+    				position -= 80;
     				continue;
     			}
     			if (random >= 0.6 && random <= 1) {
     				gameEnemy.add(new BossEnemy(position));
-    				position -= 40;
+    				position -= 80;
     				continue;
     			}
     		}	
@@ -462,8 +467,7 @@ public class MyGameStage extends JPanel implements ActionListener {
     		if (gameEnemy.get(i).isVisible()) g.drawImage(gameEnemy.get(i).loadImage(), gameEnemy.get(i).getPosX(), gameEnemy.get(i).getPosY(), null);
     	}
     }
-    
-    
+       
     @Override
     public void paintComponent(Graphics g) {
     	super.paintComponent(g);
@@ -538,7 +542,7 @@ public class MyGameStage extends JPanel implements ActionListener {
     		   	
     		checkCollisions();
     		
-    		updateTextSidePanel();
+    		if (updateText) updateTextSidePanel();
     	}
     	
     	repaint();
@@ -552,6 +556,7 @@ public class MyGameStage extends JPanel implements ActionListener {
     			a.update();
     			if (a.finishPoint) {
     				live -= a.getDamage();
+    				updateText = true;
     				gameEnemy.remove(i);
     			}
     			continue;
@@ -588,6 +593,7 @@ public class MyGameStage extends JPanel implements ActionListener {
     					gameEnemy.get(k).setBlood(towerObjects.get(i).getDamage());
     					if (gameEnemy.get(k).getBlood() <= 0) {
     						money += gameEnemy.get(k).getAward();
+    						updateText = true;
     						gameEnemy.remove(k);
     					}
     					break;

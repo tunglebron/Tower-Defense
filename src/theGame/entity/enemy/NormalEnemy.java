@@ -12,7 +12,7 @@ public class NormalEnemy extends Enemy{
 		this.visible = true;
 		
 		damage = 50;
-		blood = 100;
+		blood = 150;
 		speed = 2;
 		defense = 5;
 		award = 15;
